@@ -1,29 +1,47 @@
 export type User = {
   id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: Address;
+  firstName: string;
+  lastName: string;
+  maidenName: string;
+  age: number,
+  gender: string;
+  email:string;
   phone: string;
-  website: string;
+  username: string;
+  birthDate: string;
+  image: string;
+  bloodGroup: string;
+  height: number;
+  weight: number;
+  eyeColor: string;
+  hair: Hair;
+  domain: string;
+  address: Address;
+  university: string;
   company: Company;
 };
 
 export type Address = {
-  street: string;
-  suite: string;
+  address: string;
   city: string;
-  zipcode: string;
-  geo: Geo;
+  state: string;
+  postalCode: string;
+  coordinates: Coordinates;
 };
 
 export type Company = {
   name: string;
-  catchPhrase: string;
-  bs: string;
+  department: string;
+  title: string;
+  address: Address;
 };
 
-export type Geo = {
+export type Coordinates = {
   lat: string;
   lng: string;
 };
+
+export type Hair = {
+  color: string;
+  type: string;
+}
