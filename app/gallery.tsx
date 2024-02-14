@@ -17,10 +17,18 @@ import { User } from "./types/user";
 export type GalleryProps = {
   users: User[];
 };
+
+export type SortOption = {
+  field?: string,
+  direction?: string,
+}
+
 const Gallery = ({ users }: GalleryProps) => {
   const [usersList, setUsersList] = useState(users);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortField, setSortField] = useState<string>()
+  const [sortDirection, setSortDirection] = useState<string>()
 
   const handleModalOpen = (id: number) => {
     const user = usersList.find((item) => item.id === id) || null;
@@ -36,11 +44,51 @@ const Gallery = ({ users }: GalleryProps) => {
     setIsModalOpen(false);
   };
 
+  const handleSort = (option: SortOption) => {
+    const copy = [...usersList]
+    switch (option.field) {
+      case "name":
+        if (option.direction === "descending")
+          copy.sort((a, b) => b.name.localeCompare(a.name));
+        else
+          copy.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "company":
+        if (option.direction === "descending")
+          copy.sort((a, b) => b.company.name.localeCompare(a.company.name));
+        else
+          copy.sort((a, b) => a.company.name.localeCompare(b.company.name));
+        break;
+      case "email":
+        if (option.direction === "descending")
+          copy.sort((a, b) => b.email.localeCompare(a.email));
+        else
+          copy.sort((a, b) => a.email.localeCompare(b.email));
+        break;
+      default:
+        break
+    }
+    setUsersList(copy);
+  }
+
+  const handleSortDirectionChange = (value?: string) => {
+    handleSort({ field: sortField, direction: value })
+    setSortDirection(value)
+  }
+
+  const handleSortFieldChange = (value?: string) => {
+    handleSort({ field: value, direction: sortDirection })
+    setSortField(value)
+  }
+
   return (
     <div className="user-gallery">
       <div className="heading">
         <h1 className="title">Users</h1>
-        <Controls />
+        <Controls
+          onSortDirectionSelect={handleSortDirectionChange}
+          onSortFieldSelect={handleSortFieldChange}
+        />
       </div>
       <div className="items">
         {usersList.map((user, index) => (
