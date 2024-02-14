@@ -24,7 +24,7 @@ const Gallery = ({ users }: GalleryProps) => {
   const handleModalOpen = (id: number) => {
     const user = usersList.find((item) => item.id === id) || null;
 
-    if(user) {
+    if (user) {
       setSelectedUser(user);
       setIsModalOpen(true);
     }
@@ -48,13 +48,13 @@ const Gallery = ({ users }: GalleryProps) => {
             <div className="body">
               <Avatar
                 size={96}
-                name={user.name}
+                name={`${user.firstName} ${user.lastName}`}
                 variant="marble"
                 colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
               />
             </div>
             <div className="info">
-              <div className="name">{user.name}</div>
+              <div className="name">{`${user.firstName} ${user.lastName}`}</div>
               <div className="company">{user.company.name}</div>
             </div>
           </div>
@@ -77,7 +77,7 @@ const Gallery = ({ users }: GalleryProps) => {
                   <div className="avatar">
                     <Avatar
                       size={240}
-                      name={selectedUser.name}
+                      name={selectedUser.firstName}
                       variant="marble"
                       colors={[
                         "#92A1C6",
@@ -89,11 +89,11 @@ const Gallery = ({ users }: GalleryProps) => {
                     />
                   </div>
                   <div className="name">
-                    {selectedUser.name} ({selectedUser.username})
+                    {`${selectedUser.firstName} ${selectedUser.lastName}`} ({selectedUser.username})
                   </div>
                   <div className="field">
                     <FaLocationDot className="icon" />
-                    <div className="data">{`${selectedUser.address.street}, ${selectedUser.address.suite}, ${selectedUser.address.city}`}</div>
+                    <div className="data">{`${selectedUser.address.address}, ${selectedUser.address.city}, ${selectedUser.address.state}`}</div>
                   </div>
                   <div className="field">
                     <FaPhone className="icon" />
@@ -106,7 +106,7 @@ const Gallery = ({ users }: GalleryProps) => {
                   <div className="company">
                     <div className="name">{selectedUser.company.name}</div>
                     <div className="catchphrase">
-                      {selectedUser.company.catchPhrase}
+                      {selectedUser.company.title}
                     </div>
                   </div>
                 </div>
